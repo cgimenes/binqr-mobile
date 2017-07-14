@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BinQR</string>
+    <string name="start">Começar</string>
+    <string name="first_scan">Scaneie um QR Code para começar</string>
+</resources>
