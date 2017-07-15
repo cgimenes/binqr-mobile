@@ -28,9 +28,9 @@ import java.util.*;
  */
 public class ScanActivity extends AppCompatActivity {
     private DecoratedBarcodeView barcodeView;
-    private Map<Integer, QRCode> scannedParts;
     private List<CheckBox> checkBoxes;
     private Context context = this;
+    private SplittedFile splittedFile;
 
     private BarcodeCallback callback = new BarcodeCallback() {
         @Override
@@ -46,55 +46,37 @@ public class ScanActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            QRCode qrCode = QRCode.fromBytes(rawBytes);
-
-            if (scannedParts.containsKey(qrCode.getMetadata().getNumber())) {
+            if (splittedFile.isPartAdded(rawBytes)) {
                 return;
             }
 
-            if (checkBoxes.size() == 0) {
-                LinearLayout progress = (LinearLayout) findViewById(R.id.progress);
-                for (int i = 0; i < qrCode.getMetadata().getQuantity(); i++) {
-                    CheckBox checkBox = new CheckBox(context);
-                    checkBox.setText(String.format(Locale.getDefault(), "%d", i + 1));
-                    checkBox.setClickable(false);
-                    progress.addView(checkBox);
-                    checkBoxes.add(checkBox);
-                }
-                TextView first_scan_text = (TextView) findViewById(R.id.first_scan_text);
-                first_scan_text.setVisibility(View.GONE);
+            QRCode qrCode = splittedFile.addPart(rawBytes);
+
+            if (splittedFile.isCompleted()) {
+                splittedFile.save(Environment.getExternalStorageDirectory());
             }
 
-            checkBoxes.get(qrCode.getMetadata().getNumber() - 1).setChecked(true);
+            Toast.makeText(context, "Scanned: " + String.valueOf(qrCode.getMetadata().getNumber()), Toast.LENGTH_LONG).show();
+//            if (checkBoxes.size() == 0) {
+//                LinearLayout progress = (LinearLayout) findViewById(R.id.progress);
+//                for (int i = 0; i < splittedFile.getPiecesQuantity(); i++) {
+//                    CheckBox checkBox = new CheckBox(context);
+//                    checkBox.setText(String.format(Locale.getDefault(), "%d", i + 1));
+//                    checkBox.setClickable(false);
+//                    progress.addView(checkBox);
+//                    checkBoxes.add(checkBox);
+//                }
+//                TextView first_scan_text = (TextView) findViewById(R.id.first_scan_text);
+//                first_scan_text.setVisibility(View.GONE);
+//            }
 
-            scannedParts.put(qrCode.getMetadata().getNumber(), qrCode);
-//            if ()
-//            saveFile(rawBytes);
+//            checkBoxes.get(qrCode.getMetadata().getNumber() - 1).setChecked(true);
         }
-
 
         @Override
         public void possibleResultPoints(List<ResultPoint> resultPoints) {
         }
     };
-
-    protected void saveFile(byte[]... bytes) {
-        File file = new File(Environment.getExternalStorageDirectory(), "photo.jpg");
-
-        if (file.exists()) {
-            file.delete();
-        }
-
-        try {
-            FileOutputStream fos=new FileOutputStream(file.getPath());
-
-            fos.write(bytes[0]);
-            fos.close();
-        }
-        catch (java.io.IOException e) {
-            Log.e("PictureDemo", "Exception in photoCallback", e);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,11 +87,16 @@ public class ScanActivity extends AppCompatActivity {
         checkAndAskForPermissions();
 
         barcodeView = (DecoratedBarcodeView) findViewById(R.id.barcode_scanner);
-        DecoderFactory decoderFactory = new DefaultDecoderFactory(EnumSet.of(BarcodeFormat.QR_CODE), null, "ISO-8859-1", false);
+        DecoderFactory decoderFactory = new DefaultDecoderFactory(
+                EnumSet.of(BarcodeFormat.QR_CODE),
+                null,
+                "ISO-8859-1",
+                false
+        );
         barcodeView.getBarcodeView().setDecoderFactory(decoderFactory);
         barcodeView.decodeContinuous(callback);
 
-        scannedParts = new HashMap<>();
+        splittedFile = new SplittedFile();
         checkBoxes = new ArrayList<>();
     }
 
