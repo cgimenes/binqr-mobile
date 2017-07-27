@@ -13,8 +13,8 @@ public class QRCode {
     }
 
     public static QRCode fromBytes(byte[] qrCodeBytes) {
-        Metadata metadata = Metadata.fromBytes(Arrays.copyOfRange(qrCodeBytes, 0, 290));
-        byte[] data = Arrays.copyOfRange(qrCodeBytes, 290, qrCodeBytes.length);
+        Metadata metadata = Metadata.fromBytes(Arrays.copyOfRange(qrCodeBytes, 0, 258));
+        byte[] data = Arrays.copyOfRange(qrCodeBytes, 258, qrCodeBytes.length);
 
         return new QRCode(metadata, data);
     }

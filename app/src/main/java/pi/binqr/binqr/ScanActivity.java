@@ -2,30 +2,24 @@ package pi.binqr.binqr;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.*;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.*;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
-/**
- * This sample performs continuous scanning, displaying the barcode and source image whenever
- * a barcode is scanned.
- */
+
 public class ScanActivity extends AppCompatActivity {
     private DecoratedBarcodeView barcodeView;
     private List<CheckBox> checkBoxes;
@@ -47,6 +41,7 @@ public class ScanActivity extends AppCompatActivity {
             }
 
             if (splittedFile.isPartAdded(rawBytes)) {
+                Toast.makeText(context, "Ignored: " + String.valueOf(rawBytes[0]), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -56,21 +51,20 @@ public class ScanActivity extends AppCompatActivity {
                 splittedFile.save(Environment.getExternalStorageDirectory());
             }
 
-            Toast.makeText(context, "Scanned: " + String.valueOf(qrCode.getMetadata().getNumber()), Toast.LENGTH_LONG).show();
-//            if (checkBoxes.size() == 0) {
-//                LinearLayout progress = (LinearLayout) findViewById(R.id.progress);
-//                for (int i = 0; i < splittedFile.getPiecesQuantity(); i++) {
-//                    CheckBox checkBox = new CheckBox(context);
-//                    checkBox.setText(String.format(Locale.getDefault(), "%d", i + 1));
-//                    checkBox.setClickable(false);
-//                    progress.addView(checkBox);
-//                    checkBoxes.add(checkBox);
-//                }
-//                TextView first_scan_text = (TextView) findViewById(R.id.first_scan_text);
-//                first_scan_text.setVisibility(View.GONE);
-//            }
+            if (checkBoxes.size() == 0) {
+                LinearLayout progress = (LinearLayout) findViewById(R.id.progress);
+                for (int i = 0; i < splittedFile.getPiecesQuantity(); i++) {
+                    CheckBox checkBox = new CheckBox(context);
+                    checkBox.setText(String.format(Locale.getDefault(), "%d", i + 1));
+                    checkBox.setClickable(false);
+                    progress.addView(checkBox);
+                    checkBoxes.add(checkBox);
+                }
+                TextView first_scan_text = (TextView) findViewById(R.id.first_scan_text);
+                first_scan_text.setVisibility(View.GONE);
+            }
 
-//            checkBoxes.get(qrCode.getMetadata().getNumber() - 1).setChecked(true);
+            checkBoxes.get(qrCode.getMetadata().getNumber() - 1).setChecked(true);
         }
 
         @Override
@@ -94,6 +88,7 @@ public class ScanActivity extends AppCompatActivity {
                 false
         );
         barcodeView.getBarcodeView().setDecoderFactory(decoderFactory);
+//        barcodeView.getBarcodeView().getCameraSettings().setAutoFocusEnabled(false);
         barcodeView.decodeContinuous(callback);
 
         splittedFile = new SplittedFile();
@@ -130,6 +125,11 @@ public class ScanActivity extends AppCompatActivity {
         super.onPause();
 
         barcodeView.pause();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent motionEvent) {
+        return barcodeView.onTouchEvent(motionEvent);
     }
 
     @Override
