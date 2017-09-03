@@ -15,12 +15,17 @@ public class SaveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save);
 
-//        byte[] file = getIntent().getExtras().getByteArray("file");
-//        saveFile(file);
+        byte[] mergedFile = getIntent().getByteArrayExtra("MERGED_FILE");
+        String fileName = getIntent().getStringExtra("FILENAME");
+
+        save(fileName, mergedFile);
     }
 
-    protected void saveFile(byte[]... bytes) {
-        File file = new File(Environment.getExternalStorageDirectory(), "photo.jpg");
+    private void save(String fileName, byte[] mergedFile) {
+        File directory = new File(Environment.getExternalStorageDirectory()+File.separator+"BinQR");
+        directory.mkdirs();
+
+        File file = new File(directory.getPath(), fileName);
 
         if (file.exists()) {
             file.delete();
@@ -29,7 +34,7 @@ public class SaveActivity extends AppCompatActivity {
         try {
             FileOutputStream fos=new FileOutputStream(file.getPath());
 
-            fos.write(bytes[0]);
+            fos.write(mergedFile);
             fos.close();
         }
         catch (java.io.IOException e) {

@@ -2,9 +2,9 @@ package pi.binqr.binqr;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -48,7 +48,10 @@ public class ScanActivity extends AppCompatActivity {
             QRCode qrCode = splittedFile.addPart(rawBytes);
 
             if (splittedFile.isCompleted()) {
-                splittedFile.save(Environment.getExternalStorageDirectory());
+                Intent intent = new Intent(getBaseContext(), SaveActivity.class);
+                intent.putExtra("MERGED_FILE", splittedFile.getMergedFile());
+                intent.putExtra("FILENAME", splittedFile.getFilename());
+                startActivity(intent);
             }
 
             if (checkBoxes.size() == 0) {

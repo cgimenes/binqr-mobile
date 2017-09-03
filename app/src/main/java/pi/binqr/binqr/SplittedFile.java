@@ -1,9 +1,5 @@
 package pi.binqr.binqr;
 
-import android.util.Log;
-
-import java.io.File;
-import java.io.FileOutputStream;
 
 public class SplittedFile {
 
@@ -40,7 +36,7 @@ public class SplittedFile {
         return pieces.length;
     }
 
-    private byte[] mergeFile() {
+    public byte[] getMergedFile() {
          byte[][] dataPieces = new byte[pieces.length][];
 
         for (int i = 0; i < pieces.length; i++) {
@@ -67,23 +63,7 @@ public class SplittedFile {
         return result;
     }
 
-    public void save(File directory) {
-        File file = new File(directory, fileName);
-
-        if (file.exists()) {
-            file.delete();
-        }
-
-        try {
-            FileOutputStream fos=new FileOutputStream(file.getPath());
-
-            byte[] mergedFile = mergeFile();
-
-            fos.write(mergedFile);
-            fos.close();
-        }
-        catch (java.io.IOException e) {
-            Log.e("PictureDemo", "Exception in photoCallback", e);
-        }
+    public String getFilename() {
+        return this.fileName;
     }
 }

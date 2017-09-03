@@ -11,4 +11,13 @@
         android:paddingBottom="@dimen/activity_vertical_margin"
         tools:context="pi.binqr.binqr.SaveActivity">
 
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/editText2" android:layout_centerVertical="true" android:layout_alignParentEnd="true"
+            android:text="Seu arquivo foi salvo na memória interna do seu smartphone, no diretório BinQR"
+            android:textAlignment="center" android:textSize="24sp" android:editable="false" android:enabled="true"
+            android:contextClickable="false" android:cursorVisible="false"/>
 </RelativeLayout>
