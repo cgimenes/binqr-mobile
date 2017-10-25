@@ -2,6 +2,7 @@
 
 [![Build Status](https://www.bitrise.io/app/7164d4fa5d18673f/status.svg?token=f8cnH9upzFdyj_dchedEKw)](https://www.bitrise.io/app/7164d4fa5d18673f)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7660a352cf3745f2b58d2bfa2ea0a195)](https://www.codacy.com/app/cgimenes/binqr-mobile?utm_source=github.com&utm_medium=referral&utm_content=cgimenes/binqr-mobile&utm_campaign=badger)
+[![Maintainability](https://api.codeclimate.com/v1/badges/ba06c5c9c237e121a65f/maintainability)](https://codeclimate.com/github/cgimenes/binqr-mobile/maintainability)
 
 [README](https://github.com/cgimenes/binqr-server/blob/master/README.md)
 
