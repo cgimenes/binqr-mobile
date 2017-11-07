@@ -1,4 +1,4 @@
-package pi.binqr.binqr;
+package binqr.binqr;
 
 
 import java.util.Arrays;

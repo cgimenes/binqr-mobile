@@ -1,4 +1,4 @@
-package pi.binqr.binqr;
+package binqr.binqr;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("pi.binqr.binqr", appContext.getPackageName());
+        assertEquals("binqr.binqr", appContext.getPackageName());
     }
 }

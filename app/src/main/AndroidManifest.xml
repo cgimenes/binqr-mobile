@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="pi.binqr.binqr">
+          package="binqr.binqr">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
@@ -17,8 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ScanActivity"/>
         <activity android:name=".SaveActivity">
+        </activity>
+        <activity android:name=".ScanActivity">
         </activity>
     </application>
 

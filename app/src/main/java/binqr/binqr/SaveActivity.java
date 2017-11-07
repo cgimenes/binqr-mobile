@@ -1,14 +1,14 @@
-package pi.binqr.binqr;
+package binqr.binqr;
 
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
 
-public class SaveActivity extends AppCompatActivity {
+public class SaveActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

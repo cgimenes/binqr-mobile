@@ -1,4 +1,4 @@
-package pi.binqr.binqr;
+package binqr.binqr;
 
 import android.content.Context;
 import android.util.AttributeSet;

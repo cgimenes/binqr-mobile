@@ -1,4 +1,4 @@
-package pi.binqr.binqr;
+package binqr.binqr;
 
 
 public class SplittedFile {

@@ -1,17 +1,20 @@
-package pi.binqr.binqr;
+package binqr.binqr;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.*;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.*;
@@ -19,12 +22,37 @@ import com.journeyapps.barcodescanner.*;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
-
-public class ScanActivity extends AppCompatActivity {
+public class ScanActivity extends Activity {
     private DecoratedBarcodeView barcodeView;
     private List<CheckBox> checkBoxes;
     private Context context = this;
     private SplittedFile splittedFile;
+    private String[] neededPermissions = new String[]{
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_scan);
+
+        checkAndAskForPermissions();
+
+        barcodeView = (DecoratedBarcodeView) findViewById(R.id.barcode_scanner);
+        DecoderFactory decoderFactory = new DefaultDecoderFactory(
+                EnumSet.of(BarcodeFormat.QR_CODE),
+                null,
+                "ISO-8859-1",
+                false
+        );
+        barcodeView.getBarcodeView().setDecoderFactory(decoderFactory);
+//        barcodeView.getBarcodeView().getCameraSettings().setAutoFocusEnabled(false);
+        barcodeView.decodeContinuous(callback);
+
+        splittedFile = new SplittedFile();
+        checkBoxes = new ArrayList<>();
+    }
 
     private BarcodeCallback callback = new BarcodeCallback() {
         @Override
@@ -75,34 +103,7 @@ public class ScanActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_scan);
-
-        checkAndAskForPermissions();
-
-        barcodeView = (DecoratedBarcodeView) findViewById(R.id.barcode_scanner);
-        DecoderFactory decoderFactory = new DefaultDecoderFactory(
-                EnumSet.of(BarcodeFormat.QR_CODE),
-                null,
-                "ISO-8859-1",
-                false
-        );
-        barcodeView.getBarcodeView().setDecoderFactory(decoderFactory);
-//        barcodeView.getBarcodeView().getCameraSettings().setAutoFocusEnabled(false);
-        barcodeView.decodeContinuous(callback);
-
-        splittedFile = new SplittedFile();
-        checkBoxes = new ArrayList<>();
-    }
-
     private void checkAndAskForPermissions() {
-        String[] neededPermissions = new String[]{
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-        };
         Set<String> ungrantedPermissions = new HashSet<>();
 
         for (String neededPermission : neededPermissions) {
@@ -113,6 +114,15 @@ public class ScanActivity extends AppCompatActivity {
 
         if (ungrantedPermissions.size() > 0) {
             ActivityCompat.requestPermissions(this, ungrantedPermissions.toArray(new String[]{}), 0);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        for (String neededPermission : neededPermissions) {
+            if (ContextCompat.checkSelfPermission(this, neededPermission) != PackageManager.PERMISSION_GRANTED) {
+                finish();
+            }
         }
     }
 

@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <pi.binqr.binqr.SemiDecoratedBarcodeView
-        android:id="@+id/barcode_scanner"
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_above="@+id/info"
-        android:layout_alignParentTop="true">
+        android:layout_height="match_parent"
+        tools:context="binqr.binqr.ScanActivity">
 
-    </pi.binqr.binqr.SemiDecoratedBarcodeView>
+    <binqr.binqr.SemiDecoratedBarcodeView
+            android:id="@+id/barcode_scanner"
+            android:layout_width="368dp"
+            android:layout_height="0dp"
+            android:layout_above="@+id/info"
+            android:layout_alignParentTop="true" tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="8dp">
+
+    </binqr.binqr.SemiDecoratedBarcodeView>
 
     <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:id="@+id/info"
-            android:weightSum="1" android:orientation="vertical">
+            android:weightSum="1" android:orientation="vertical" tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="8dp">
 
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:layout_weight="1" android:id="@+id/progress"
-        >
+                android:layout_height="match_parent" android:layout_weight="1" android:id="@+id/progress">
         </LinearLayout>
         <TextView
                 android:text="@string/first_scan"
