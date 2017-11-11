@@ -9,8 +9,36 @@
 
     <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" android:id="@+id/button" android:elevation="0dp"
-            android:onClick="scan" android:text="@string/start"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/button" android:elevation="0dp"
+            android:onClick="scan" android:text="@string/start"
+            android:layout_marginTop="55dp"
+            android:layout_below="@+id/textView3" android:layout_centerHorizontal="true"/>
+    <TextView
+            android:text="Bem-vindo ao BinQR!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:layout_above="@+id/textView2" android:layout_centerHorizontal="true"
+            android:layout_marginBottom="37dp" android:textSize="24sp" android:textStyle="bold"/>
+    <TextView
+            android:text="Antes de começar, acesse o site"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            android:layout_above="@+id/textView3" android:layout_centerHorizontal="true"
+            android:layout_marginBottom="18dp"/>
+    <TextView
+            android:text="pelo computador e envie seu arquivo."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3" android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
+    <TextView
+            android:text="http://binqr.herokuapp.com "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView4"
+            android:layout_above="@+id/textView3" android:layout_centerHorizontal="true"
+            android:textStyle="bold|italic"/>
 
 </RelativeLayout>

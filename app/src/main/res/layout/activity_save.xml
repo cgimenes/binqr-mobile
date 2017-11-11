@@ -15,21 +15,23 @@
               android:text="@string/saved"
               android:textSize="24sp"
               android:textAlignment="center"
-              android:layout_centerVertical="true"/>
+              android:layout_marginTop="189dp"
+              android:layout_alignParentTop="true" android:layout_alignParentStart="true"/>
     <Button
             android:text="@string/open"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/open" android:layout_below="@+id/zxing_status_view"
-            android:layout_alignParentStart="true" android:layout_marginStart="68dp" android:layout_marginTop="31dp"
-            android:onClick="open" />
+            android:layout_height="wrap_content" android:id="@+id/open"
+            android:layout_marginStart="60dp" android:layout_marginTop="31dp"
+            android:onClick="open" android:layout_below="@+id/zxing_status_view"
+            android:layout_alignParentStart="true"/>
 
     <Button
             android:text="@string/restart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/restart"
-            android:layout_marginStart="21dp"
+            android:layout_marginStart="34dp"
+            android:onClick="restart"
             android:layout_alignBaseline="@+id/open" android:layout_alignBottom="@+id/open"
-            android:layout_toEndOf="@+id/open"
-            android:onClick="restart" />
+            android:layout_toEndOf="@+id/open"/>
 
 </RelativeLayout>
