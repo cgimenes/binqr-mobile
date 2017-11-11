@@ -1,4 +1,4 @@
-package binqr.binqr;
+package com.binqr.client;
 
 import org.junit.Test;
 

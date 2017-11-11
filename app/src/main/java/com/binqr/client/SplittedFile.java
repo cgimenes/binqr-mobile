@@ -1,4 +1,4 @@
-package binqr.binqr;
+package com.binqr.client;
 
 
 public class SplittedFile {

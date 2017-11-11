@@ -1,4 +1,4 @@
-package binqr.binqr;
+package com.binqr.client;
 
 import android.Manifest;
 import android.app.Activity;
@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
@@ -18,11 +19,12 @@ import android.widget.Toast;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.*;
+import com.journeyapps.barcodescanner.camera.CameraSettings.FocusMode;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
-public class ScanActivity extends Activity {
+public class ScanActivity extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
     private DecoratedBarcodeView barcodeView;
     private List<CheckBox> checkBoxes;
     private Context context = this;
@@ -47,8 +49,11 @@ public class ScanActivity extends Activity {
                 false
         );
         barcodeView.getBarcodeView().setDecoderFactory(decoderFactory);
-//        barcodeView.getBarcodeView().getCameraSettings().setAutoFocusEnabled(false);
+        barcodeView.getBarcodeView().getCameraSettings().setFocusMode(FocusMode.MACRO);
+
         barcodeView.decodeContinuous(callback);
+
+        barcodeView.setStatusText("");
 
         splittedFile = new SplittedFile();
         checkBoxes = new ArrayList<>();
@@ -80,6 +85,7 @@ public class ScanActivity extends Activity {
                 intent.putExtra("MERGED_FILE", splittedFile.getMergedFile());
                 intent.putExtra("FILENAME", splittedFile.getFilename());
                 startActivity(intent);
+                finish();
             }
 
             if (checkBoxes.size() == 0) {
@@ -118,7 +124,7 @@ public class ScanActivity extends Activity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         for (String neededPermission : neededPermissions) {
             if (ContextCompat.checkSelfPermission(this, neededPermission) != PackageManager.PERMISSION_GRANTED) {
                 finish();

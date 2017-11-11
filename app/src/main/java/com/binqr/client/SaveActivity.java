@@ -1,9 +1,10 @@
-package binqr.binqr;
+package com.binqr.client;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.View;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,5 +41,12 @@ public class SaveActivity extends Activity {
         catch (java.io.IOException e) {
             Log.e("PictureDemo", "Exception in photoCallback", e);
         }
+    }
+
+    public void open(View view) {
+    }
+
+    public void restart(View view) {
+        finish();
     }
 }

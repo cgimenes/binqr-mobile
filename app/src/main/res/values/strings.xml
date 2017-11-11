@@ -4,4 +4,6 @@
     <string name="start">Começar</string>
     <string name="first_scan">Scaneie um QR Code para começar</string>
     <string name="saved">Seu arquivo foi salvo na memória interna do seu smartphone, no diretório BinQR</string>
+    <string name="open">Abrir arquivo</string>
+    <string name="restart">Recomeçar</string>
 </resources>
